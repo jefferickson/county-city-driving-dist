@@ -1,3 +1,8 @@
 *.db
 .RData
 .Rhistory
+*.Rout
+.idea/
+bin/
+include/
+lib/

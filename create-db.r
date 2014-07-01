@@ -30,7 +30,10 @@ county.city.list.long$COUNTYFP <- NULL
 county.city.list.long$POPULATION <- NULL
 names(county.city.list.long) <- c("county_name", "state_name", "county_lat", "county_long", "fips", "city_id", "city_rank", "city_name", "city_long", "city_lat")
 
+#Finally, we should create the field that will store the distances (which are NA for now)
+county.city.list.long$driving_distance <- c(NA)
+
 ### CREATE SQLite DATABASE ###
 db.handle <- dbConnect(dbDriver("SQLite"), dbname="database/county-city-listing.db")
 
-dbWriteTable(db.handle, "listing", county.city.list.long)
+dbWriteTable(db.handle, "listing", county.city.list.long, row.names=FALSE)
