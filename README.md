@@ -13,11 +13,19 @@ The R script (`create-db.r`) generates a database with one row per large city/co
 
 The Python script (`generate-driving-dist.py`), per run, finds a row in the database that doesn't yet have a distance calculated, calculates the distance, and then saves it back to the database. It is meant to be run repetitively (as a cron job, for example).
 
+Here is a sample cron tab:  
+```
+* * * * * /path/to/python3 /path/to/generate-driving-dist.py /path/to/database.db >> /path/to/log  
+*/2 * * * * /path/to/python3 /path/to/generate-driving-dist.py /path/to/database/db >> /path/to/log
+```
+
 The final product will be a complete SQL database with all of the distance information. I will post the final database to this repo once it is complete.
 
 ### Time Estimate
 
-There are 102,597 combinations that need distances calculated. Google Maps API limits you to 2,500 queries a day. Therefore the estimated run time is 42 days.
+There are 102,597 combinations that need distances calculated. Google Maps API limits you to 2,500 queries a day, but because of the limitations of cron jobs, we will run 2160 per day. Therefore the estimated run time is 48 days.
+
+In order to check on the progress, see [this log file](http://erick.so/n/distlog).
 
 ### References
 
