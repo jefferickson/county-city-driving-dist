@@ -1,0 +1,24 @@
+## County/City Driving Distance
+
+#### Author: Jeff Erickson `<jeff@erick.so>`
+#### Date: 2014-07-04
+
+### Introduction
+
+This is a simple group of scripts to ultimately generate a database that has the driving distance (in KM, according to Google Maps API) between every county population centroid in the lower 48 and each major city with over 2 million people in its primary statistical area.
+
+### Instructions
+
+The R script (`create-db.r`) generates a database with one row per large city/county center combination in the lower 48 states.
+
+The Python script (`generate-driving-dist.py`), per run, finds a row in the database that doesn't yet have a distance calculated, calculates the distance, and then saves it back to the database. It is meant to be run repetitively (as a cron job, for example).
+
+The final product will be a complete SQL database with all of the distance information. I will post the final database to this repo once it is complete.
+
+### Time Estimate
+
+There are 102,597 combinations that need distances calculated. Google Maps API limits you to 2,500 queries a day. Therefore the estimated run time is 42 days.
+
+### References
+
+County Density/Distance/Population Map. Erickson, Jeffrey P. 2014. [(link)](https://github.com/jefferickson/county-dendist-map)
