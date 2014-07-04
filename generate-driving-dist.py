@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import sqlite3, requests, sys
+import sqlite3, requests, sys, datetime
 
 
 def google_driving_dist(orig_lat, orig_long, dest_lat, dest_long):
@@ -85,4 +85,4 @@ if __name__ == '__main__':
         sys.exit('No more rows left. We\'re done!')
 
     #Print the diag info
-    print('%s, %s -> %s: %d (%i/%i remaining)' % (county_name, state_name, city_name, driving_distance, n_null, n_all))
+    print('%s %s, %s -> %s: %d (%i/%i remaining)' % (datetime.datetime.now(), county_name, state_name, city_name, driving_distance, n_null, n_all))
