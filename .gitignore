@@ -1,4 +1,3 @@
-*.db
 *.log
 .RData
 .Rhistory
@@ -7,3 +6,4 @@
 bin/
 include/
 lib/
+.Rproj.user

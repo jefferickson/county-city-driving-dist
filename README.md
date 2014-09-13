@@ -1,11 +1,13 @@
-## County/City Driving Distance
+## County/City Driving Distance Dataset Creation
 
 #### Author: Jeff Erickson `<jeff@erick.so>`
-#### Date: 2014-07-04
+#### Date: 2014-07-04 (Updated: 2014-09-13)
 
 ### Introduction
 
-This is a simple group of scripts to ultimately generate a database that has the driving distance (in KM, according to Google Maps API) between every county population centroid in the lower 48 and each major city with over 2 million people in its primary statistical area.
+This is a simple group of scripts to ultimately generate a dataset that has the driving distance (in KM, according to Google Maps API) between every county population centroid in the lower 48 and each major U.S. city with over 2 million people in its primary statistical area.
+
+Update (2014-09-13): The dataset has been created and is available [here](https://raw.githubusercontent.com/jefferickson/county-dendist-map/master/datasets/county-city-driving-dist.csv).
 
 ### Instructions
 
@@ -25,7 +27,7 @@ The final product will be a complete SQL database with all of the distance infor
 
 There are 102,597 combinations that need distances calculated. Google Maps API limits you to 2,500 queries a day, but because of the limitations of cron jobs, we will run 2160 per day. Therefore the estimated run time is 48 days.
 
-In order to check on the progress, see [this log file](http://erick.so/n/distlog).
+Update (2014-09-13): The process began on 2014-07-04 and completed on 2014-08-21.
 
 ### References
 
