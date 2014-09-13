@@ -7,7 +7,7 @@
 
 This is a simple group of scripts to ultimately generate a dataset that has the driving distance (in KM, according to Google Maps API) between every county population centroid in the lower 48 and each major U.S. city with over 2 million people in its primary statistical area.
 
-Update (2014-09-13): The dataset has been created and is available [here](https://raw.githubusercontent.com/jefferickson/county-dendist-map/master/datasets/county-city-driving-dist.csv).
+Update (2014-09-13): The dataset has been created and is available [here](https://raw.githubusercontent.com/jefferickson/county-city-driving-dist/master/datasets/county-city-driving-dist.csv).
 
 ### Instructions
 
