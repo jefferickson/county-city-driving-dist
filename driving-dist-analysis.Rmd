@@ -1,0 +1,77 @@
+---
+title: "Driving Distances to the Closest Cites Across the U.S."
+author: "Jeff Erickson"
+date: "Saturday, September 13, 2014"
+output: html_document
+---
+
+### LOAD LIBRARIES
+
+```{r}
+library(ggplot2)
+library(scales)
+library(knitr)
+library(rgeos)
+library(rgdal)
+```
+
+### HELPER FUNCTIONS
+
+```{r}
+z.score <- function(x) { #Calc z-scores
+  #arg: a vector of values to z-score
+  return((x - mean(x)) / sd(x))
+}
+```
+
+### IMPORT AND SUBSET
+
+```{r}
+driving.dists <- read.csv("datasets/county-city-driving-dist.csv", header=TRUE, as.is=TRUE)
+
+driving.dists.shortest <- driving.dists[which(driving.dists$shortest_flag == 1), ]
+```
+
+### CALCULATE Z-SCORE
+
+```{r}
+#Z-Score of driving distance
+driving.dists.shortest$z.score <- z.score(driving.dists.shortest$driving_distance)
+```
+
+### BASIC INVESTIGATIONS
+
+```{r}
+summary(driving.dists.shortest$driving_distance)
+
+ggplot(driving.dists.shortest, aes(x=driving_distance)) +
+  geom_density()
+
+ggplot(driving.dists.shortest, aes(x=z.score)) +
+  geom_density()
+```
+
+Top 10 Counties from Major U.S. Cities:
+```{r}
+kable(head(driving.dists.shortest[order(-driving.dists.shortest$driving_distance),], n=10), format="markdown", row.names=FALSE)
+```
+
+### HEAT MAP
+
+Prepare the shapes for mapping.
+```{r}
+county.shapes <- readOGR(dsn="datasets", "gz_2010_us_050_00_500k")
+county.shapes.f <- fortify(county.shapes, region="GEO_ID")
+
+county.shapes.f <- merge(county.shapes.f, driving.dists.shortest, by.x="id", by.y="fips")
+```
+
+...and map!
+```{r} 
+ggplot(county.shapes.f[order(county.shapes.f$order), ], aes(x=long, y=lat, group=group)) +
+  geom_polygon(colour="black", aes(fill=z.score)) +
+  scale_fill_gradientn("Driving Distance\n(z-Score)", colours=c("green", "white", "red"), values=c(-5, 0, 5), rescaler=function(x, ...) x, oob=identity) +
+  coord_equal() +
+  ggtitle(expression(atop("Driving Distance to Nearest Large U.S. City", atop("Compared to Average", "")))) +
+  theme(axis.title=element_blank(), axis.text=element_blank(), axis.ticks=element_blank(), panel.grid=element_blank())
+```

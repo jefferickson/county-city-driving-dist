@@ -1,34 +1,40 @@
-## County/City Driving Distance Dataset Creation
+## County/City Driving Distance Dataset and Map
 
 #### Author: Jeff Erickson `<jeff@erick.so>`
-#### Date: 2014-07-04 (Updated: 2014-09-13)
+#### Date: 2014-09-13
 
 ### Introduction
 
-This is a simple group of scripts to ultimately generate a dataset that has the driving distance (in KM, according to Google Maps API) between every county population centroid in the lower 48 and each major U.S. city with over 2 million people in its primary statistical area.
+This is a dataset that has the driving distance (in km, according to Google Maps API) between every county population centroid in the lower 48 and each major U.S. city with over 2 million people in its primary statistical area.
 
-Update (2014-09-13): The dataset has been created and is available [here](https://raw.githubusercontent.com/jefferickson/county-city-driving-dist/master/datasets/county-city-driving-dist.csv).
+For information on how this dataset was created, please see [this README](https://github.com/jefferickson/county-city-driving-dist/blob/master/README-creation.md).
 
-### Instructions
+### The Dataset
 
-The R script (`create-db.r`) generates a database with one row per large city/county center combination in the lower 48 states.
+[The dataset](https://raw.githubusercontent.com/jefferickson/county-city-driving-dist/master/datasets/county-city-driving-dist.csv) contains 102,597 rows: one row per U.S. county (in the lower 48 states) per major U.S. city.
 
-The Python script (`generate-driving-dist.py`), per run, finds a row in the database that doesn't yet have a distance calculated, calculates the distance, and then saves it back to the database. It is meant to be run repetitively (as a cron job, for example).
+The variables include:
 
-Here is a sample cron tab:  
-```
-* * * * * /path/to/python3 /path/to/generate-driving-dist.py /path/to/database.db >> /path/to/log  
-*/2 * * * * /path/to/python3 /path/to/generate-driving-dist.py /path/to/database/db >> /path/to/log
-```
+1. `fips`: the FIPS code of the county
+2. `city_id`: the ID code of the city, as defined in [this key](https://raw.githubusercontent.com/jefferickson/county-city-driving-dist/master/datasets/maj.city.long.lat.csv)
+3. `county_name`: the name of the county
+4. `state_name`: the name of the state that the county is in
+5. `county_lat`: the latitude of the population centroid of the county
+6. `county_long`: the longitude of the population centroid of the county
+7. `city_rank`: the rank of the population of the city
+8. `city_name`: the name and state of the city
+9. `city_long`: the longitude of the city
+10. `city_lat`: the latitude of the city
+11. `driving_distance`: the driving distance, in km, according to Google Maps API, between the city and the county population centroid
+12. `shortest_flag`: a flag indicating if this is the closest city for each county population centroid
 
-The final product will be a complete SQL database with all of the distance information. I will post the final database to this repo once it is complete.
+### Mapping the Results
 
-### Time Estimate
+To help visualize this data, here is a map of the z-score of the shortest driving distance for each county:
 
-There are 102,597 combinations that need distances calculated. Google Maps API limits you to 2,500 queries a day, but because of the limitations of cron jobs, we will run 2160 per day. Therefore the estimated run time is 48 days.
+![Map of the shortest driving distances](https://raw.githubusercontent.com/jefferickson/county-city-driving-dist/master/map_output/map.v1.png)
+[Large PDF](https://raw.githubusercontent.com/jefferickson/county-city-driving-dist/master/map_output/map.v1.pdf)
 
-Update (2014-09-13): The process began on 2014-07-04 and completed on 2014-08-21.
+### Extension: Driving Distance and its Relation to Rurality
 
-### References
-
-County Density/Distance/Population Map. Erickson, Jeffrey P. 2014. [(link)](https://github.com/jefferickson/county-dendist-map)
+For more information on this topic, please see the [County Density/Distance/Population Map](https://github.com/jefferickson/county-dendist-map).
