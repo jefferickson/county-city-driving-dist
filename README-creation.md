@@ -15,7 +15,7 @@ Update (2014-09-13):
 
 ### Instructions
 
-The R script (`create-db.r`) generates a database with one row per large city/county center combination in the lower 48 states.
+The R script `create-db.r` generates a database with one row per large city/county center combination in the lower 48 states.
 
 The Python script (`generate-driving-dist.py`), per run, finds a row in the database that doesn't yet have a distance calculated, calculates the distance, and then saves it back to the database. It is meant to be run repetitively (as a cron job, for example).
 
@@ -26,6 +26,8 @@ Here is a sample cron tab:
 ```
 
 The final product will be a complete SQL database with all of the distance information. I will post the final database to this repo once it is complete.
+
+Finally, the R script `export-db.r` creates the shortest_flag and then exports to the data to a CSV.
 
 ### Time Estimate
 
